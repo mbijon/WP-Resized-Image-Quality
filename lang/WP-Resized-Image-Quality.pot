@@ -1,0 +1,56 @@
+# Copyright (C) 2013 WP Resized Image Quality
+# This file is distributed under the same license as the WP Resized Image Quality package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Resized Image Quality 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/WP-Resized-Image-Quality\n"
+"POT-Creation-Date: 2013-02-22 09:15:53+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: templates/riq-admin-page-template.php:5
+msgid "Your settings have been saved."
+msgstr ""
+
+#: templates/riq-admin-page-template.php:17
+msgid "Image Quality"
+msgstr ""
+
+#: templates/riq-admin-page-template.php:21
+msgid "JPEG Quality %"
+msgstr ""
+
+#: templates/riq-admin-page-template.php:27
+msgid "The default compression setting in WordPress is 90%"
+msgstr ""
+
+#: wp-resized-image-quality.php:126
+msgid "You do not have sufficient permissions to access this page. Please check your login and try again."
+msgstr ""
+
+#: wp-resized-image-quality.php:136
+msgid "Invalid: Update without permissions. Please check your login and try again."
+msgstr ""
+#. Plugin Name of the plugin/theme
+msgid "WP Resized Image Quality"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://www.geekcoded.com/plugin/wp-resized-image-quality/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Change the compression-level of uploaded images and thumbnails. Get better image quality or save bandwidth."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Mike Bijon, GeekCoded"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.mbijon.com/about-mike-bijon/"
+msgstr ""
