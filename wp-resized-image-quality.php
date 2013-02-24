@@ -109,7 +109,7 @@ class WP_Resized_Image_Quality {
 	
 	// For admin-only scripts
 	public function admin_page_statics() {
-		if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == 'riq-admin' || 1 == 1 ) {
+		if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == 'riq-admin' ) {
 			// JS
 			wp_enqueue_script( 'jquery-ui-slider' );
 			wp_enqueue_script( 'riq-admin' );
