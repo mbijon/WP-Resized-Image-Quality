@@ -3,7 +3,7 @@ Contributors: mbijon
 Tags: image, thumbnail, compression, quality, YSlow, PageSpeed, bandwidth, jpeg, jpg, size, file, storage, uploader, uploaded, imagemagick, gd library
 Requires at least: 2.7
 Tested up to: 3.5.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 == Description ==
 
@@ -40,7 +40,7 @@ After you deactivate the plugin all new images will use the default 90% compress
 
 == Changelog ==
 
-= 1.0.2 =
+= 1.0.3 =
 * Fix WP.org screenshot display
 
 = 1.0.1 =
