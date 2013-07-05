@@ -3,7 +3,7 @@
 Plugin Name: WP Resized Image Quality
 Plugin URI: http://www.geekcoded.com/plugin/wp-resized-image-quality/
 Description: Change the compression-level of uploaded images and thumbnails. Get better image quality or save bandwidth.
-Version: 1.0.3
+Version: 2.0
 Author: Mike Bijon, GeekCoded
 Author URI: http://www.mbijon.com/about-mike-bijon/
 License: GPLv2
