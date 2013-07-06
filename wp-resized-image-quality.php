@@ -47,24 +47,30 @@ class WP_Resized_Image_Quality {
 	public $error = '';
 	
 	/**
-	 * Vesrion # of WP-Resized-Image-Quality
+	 * Version # of WP-Resized-Image-Quality
 	 */
-	const RIQ_PLUGIN_VERSION = '1.0';
+	const RIQ_PLUGIN_VERSION = '2.0';
 	
 	
 	/**
 	 * Constructor: Actions setup
 	 */
 	public function __construct() {
+		
 		add_action( 'init', array( $this, 'wp_init' ) );
 		add_action( 'admin_menu', array( $this, 'admin_page_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_page_statics' ) );
+		
+		// Adds compression slider to Settings > Media page, added v2.0
+		add_action( 'admin_init', array( $this, 'register_riq_media_option' ) );
+		
 	}
 
 	/**
 	 * Plugin setup, post-construct. Fires on 'init' hook
 	 */
 	public function wp_init() {
+		
 		// Setup data/array once
 		if ( ! is_array( $this->riq_options ) && false === ( get_transient( 'riq_jpeg_quality' ) ) )
 			add_option( 'riq_options', array(), false, false );
@@ -81,7 +87,7 @@ class WP_Resized_Image_Quality {
 			'riq-admin',
 			plugins_url( 'js/riq-admin.js', __FILE__ ),
 			array( 'jquery', 'jquery-ui-slider' ),
-			'riq_' . self::RIQ_PLUGIN_VERSION, //microtime(),
+			'riq_' . self::RIQ_PLUGIN_VERSION,
 			true
 		);
 		wp_register_style(
@@ -91,36 +97,45 @@ class WP_Resized_Image_Quality {
 			'riq_' . self::RIQ_PLUGIN_VERSION,
 			'all'
 		);
+		
 	}
+	
 	
 	// Add submenu under Settings in WP-Admin		
 	public function admin_page_menu() {
+		
 		$options_page = add_options_page(
-					'Image Quality',
-					'Image Quality',
-					'manage_options',
-					'riq-admin',
-					array( $this, 'render_options_page' )
-				);
+			'Image Quality',
+			'Image Quality',
+			'manage_options',
+			'riq-admin',
+			array( $this, 'render_options_page' )
+		);
 		
 		// Add contextual help menu in WP-admin
 		//add_action("load-$admin_page", 'add_help_menu');
+		
 	}
 	
 	// For admin-only scripts
-	public function admin_page_statics() {
-		if ( isset( $_REQUEST['page'] ) && $_REQUEST['page'] == 'riq-admin' ) {
+	public function admin_page_statics( $hook ) {
+		
+		if ( $hook == 'options-media.php' || $hook == 'settings_page_riq-admin' ) {
 			// JS
 			wp_enqueue_script( 'jquery-ui-slider' );
 			wp_enqueue_script( 'riq-admin' );
 			
 			// CSS
 			wp_enqueue_style( 'riq-jquery-ui' );
+			
 		}
+		
 	}
+	
 	
 	// HTML output for WP-Admin: Settings > Image Quality
 	public function render_options_page() {
+		
 		// Security: Check that the user has the required capability 
 		if ( ! current_user_can( 'manage_options' ) )
 			wp_die( __( 'You do not have sufficient permissions to access this page. Please check your login and try again.', 'wp-resized-image-quality' ) );
@@ -134,6 +149,7 @@ class WP_Resized_Image_Quality {
 			
 		} elseif ( ! empty( $_POST['riq-integer'] ) ) {
 			wp_die( __( 'Invalid: Update without permissions. Please check your login and try again.', 'wp-resized-image-quality' ) );
+			
 		}
 		
 		// Get the whole reason this plugin exists
@@ -146,15 +162,82 @@ class WP_Resized_Image_Quality {
 				$jpeg_quality = (int)90;
 			
 			set_transient( 'riq_jpeg_quality', $jpeg_quality, 60 * 60 * 24 );
+			
 		}
+		
 		$this->jpeg_quality = $this->get_jpeg_quality_setting();
 		
 		// Include admin page/HTML output from separate file
-		require_once( 'templates/riq-admin-page-template.php' );
+		require_once( dirname( __file__ ) . '/templates/riq-admin-page-template.php' );
 	}
+	
+	
+	// Register options for use in WP-Admin existing page: Settings > Media
+	public function register_riq_media_option() {
+		
+		register_setting( 'media', 'riq_options', array( $this, 'sanitize_riq_media_option' ) );
+		
+		add_settings_field( 'riq-integer', 'JPEG Quality', array( $this, 'render_riq_media_option' ), 'media', 'default' );
+		
+	}
+	
+	
+	// HTML output for simplified option in WP-Admin: Settings > Media
+	public function render_riq_media_option() {
+		
+		// Get the whole reason this plugin exists
+		if ( false === ( $jpeg_quality = get_transient( 'riq_jpeg_quality' ) ) ) {
+			$this->riq_options = get_option( 'riq_options' );
+			
+			if ( array_key_exists( 'jpeg_quality', $this->riq_options ) )
+				$jpeg_quality = $this->riq_options['jpeg_quality'];
+			else
+				$jpeg_quality = (int)90;
+			
+			set_transient( 'riq_jpeg_quality', $jpeg_quality, 60 * 60 * 24 );
+			
+		}
+		
+		$this->jpeg_quality = $this->get_jpeg_quality_setting();
+		
+		// Include admin page/HTML output from separate file
+		require_once( dirname( __file__ ) . '/templates/riq-media-option-template.php' );
+		
+	}
+	
+	
+	// Sanitization helper function for 'render_riq_media_option()'
+	public function sanitize_riq_media_option( $riq_options ) {
+		
+		if ( ! empty( $_POST['riq-integer'] ) ) {
+			
+			$valid = array();
+			$valid['jpeg_quality'] = intval( $_POST['riq-integer'] );
+			
+			// !!! Must delete transient, because WP's built-in save routine won't
+			delete_transient( 'riq_jpeg_quality' );
+			
+			return $valid;
+			
+		} else {
+			
+			add_settings_error(
+				'JPEG Quality',
+				'riq_numeric_error',
+				//'Invalid %, must be a number',
+				print_r($riq_options),
+				//$riq_options,
+				'error'
+			);
+		
+		}
+		
+	}
+	
 	
 	// The whole reason this plugin exists
 	public function get_jpeg_quality_setting() {
+		
 		if ( false === ( $jpeg_quality = get_transient( 'riq_jpeg_quality' ) ) ) {
 			$this->riq_options = get_option( 'riq_options' );
 			
@@ -169,7 +252,10 @@ class WP_Resized_Image_Quality {
 		return $jpeg_quality;
 	}
 	
+	
+	// Save plugin option array & update transient
 	public function update_plugin_settings( $jpeg_quality = 90 ) {
+		
 		$this->riq_options['jpeg_quality'] = intval( $jpeg_quality );
 		update_option( 'riq_options', $this->riq_options );
 		
@@ -179,17 +265,23 @@ class WP_Resized_Image_Quality {
 		return true;
 	}
 	
+	
 	// Contextual help menu
 	public function add_help_menu() {
 		
 	}
 	
+	
 	/**
-	 * Deletes all plugin options
+	 * Deletes all plugin options & transient
 	 */
 	public function plugin_deactivation( $network_wide ) {
+		
 		delete_option( 'riq_options' );
+		delete_transient( 'riq_jpeg_quality' );
+		
 	}
+	
 }
 $riq = new WP_Resized_Image_Quality();
 

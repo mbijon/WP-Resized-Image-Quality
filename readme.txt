@@ -28,13 +28,17 @@ The admin page uses an easy slider to set the compression level, making this eas
 
 == Frequently Asked Questions ==
 
+= How can I update JPEGs uploaded before installing this plugin at a different setting? =
+
+First, install this plugin and choose your new compression level. Then install the Regenerate Thumbnails plugin, http://wordpress.org/plugins/regenerate-thumbnails/, and run it. All the regenerated thumbnails will be compressed at the compression % from this plugin.
+
 = What was the default image quality in WordPress? =
 
 The default image compression setting for JPEGs is 90%.
 
 = What happens to uploaded images if I turn the plugin off? =
 
-After you deactivate the plugin all new images will use the default 90% compression setting. Images uploaded while the plugin was active will stay at their old compression level.
+After you deactivate the custom compression setting will be removed and all new images will use WP's default 90% compression setting. Images uploaded while the plugin was active will stay at their old compression level.
 
 = Does this plugin compress PNG files? =
 
@@ -42,12 +46,14 @@ Unfortunately, it doesn't. All the PNG compression tools I've found aren't stand
 
 == Screenshots ==
 
-1. Admin page with one setting, simple enough
+1. No complicated media/compression interface. Just one slider added to the Settings > Admin page
+2. Admin page with one setting, simple enough
 
 == Changelog ==
 
 = 2.0 =
 * Move image compression toggle from custom Settings > Image Quality page to Settings > Media
+* Add note to current custom Admin page that UX will permanently move to Settings > Media in v3.0
 
 = 1.0.3 =
 * (attempted) Fix WP.org screenshot display
