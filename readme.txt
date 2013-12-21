@@ -33,21 +33,30 @@ The only interface is a slider aqdded to the Settings > Media admin page, making
 
 == Frequently Asked Questions ==
 
-= How can I update JPEGs uploaded before installing this plugin at a different setting? =
-
-First, install this plugin and choose your new compression level. Then install the Regenerate Thumbnails plugin, http://wordpress.org/plugins/regenerate-thumbnails/, and run it. All the regenerated thumbnails will be compressed at the compression % from this plugin.
-
 = What was the default image quality in WordPress? =
 
 The default image compression setting for JPEGs is 90%.
 
+
+= What about PNG and GIF images? =
+
+WordPress doesn't currently support PNG compression internally (none at all). There are other image-handling plugins that compress PNGs and GIFs, but they either require server-side tools or a 3rd-party service. For a Plugin using server-side tools, try 'EWWW Image Optimizer'. For a Plugin using a 3rd-party service, try 'WP Smush.it'.
+
+
+= How can I update JPEGs uploaded before installing this plugin at a different setting? =
+
+First, install this plugin and choose your new compression level. Then install the Regenerate Thumbnails plugin, http://wordpress.org/plugins/regenerate-thumbnails/, and run it. All the regenerated thumbnails will be compressed at the compression % from this plugin.
+
+
 = What happens to uploaded images if I turn the plugin off? =
 
-After you deactivate the custom compression setting will be removed and all new images will use WP's default 90% compression setting. Images uploaded while the plugin was active will stay at their old compression level.
+Images uploaded while the plugin was active will stay at their original/old compression level (to recompress them, I recommend the Regenerate Thumbnails plugin). After you deactivate the custom compression setting will be removed and all new images will use WP's default 90% compression setting.
+
 
 = Does this plugin compress PNG files? =
 
 No, it doesn't. All the PNG compression tools I've found aren't standard on most servers. You would need root access and a more-complicated plugin to get PNG compression working.
+
 
 
 == Screenshots ==
@@ -57,7 +66,8 @@ No, it doesn't. All the PNG compression tools I've found aren't standard on most
 
 == Changelog ==
 
-= 2.0.1 =
+= 2.1 =
+* Add handling of the 'wp_editor_set_quality' filter that was added in WP 3.5 for ImageMagick API
 * Update styles to use colors from WP3.8 admin themes
 * Docs & screenshot reflect new placement of slider on the Settings > Media admin page
 
