@@ -4,7 +4,7 @@
 	</script>
 
 	<div>
-		Current Compression %: <input type="text" class="riq-amount" id="riq-amount" style="border: 0; font-weight: bold;" />
+		Compression %: <input type="text" class="riq-amount" id="riq-amount" style="font-weight: bold; background-color: transparent; border: none; box-shadow: none;" />
 		<br />
 		
 		<div class="riq-slider" id="riq-slider" style="width:400px;"></div>

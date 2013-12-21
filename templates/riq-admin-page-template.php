@@ -19,22 +19,22 @@ var jpegQuality = '<?php echo $this->jpeg_quality; ?>';
 			<table class="form-table">
 				<tr>
 					<td colspan="2">
-						<?php $sm_url = admin_url( 'options-media.php' ); ?>
-						<h3>Plugin Version 2.0, Update Note:</h3>
-						<p>The slider below was added to the <a href="<?php echo $sm_url; ?>">Settings &gt; Media page</a> in version 2.0.
-						<br />
-						In version 3.0 this screen will be removed and the slider will only be on the <a href="<?php echo $sm_url; ?>">Settings &gt; Media page</a>.</p>
+						<div class="widgets-holder-wrap" style="padding: 0 10px 10px;">
+							<?php $sm_url = admin_url( 'options-media.php' ); ?>
+							<h3>Plugin, Future Update Note:</h3>
+							<p>The slider below has been added to the <a href="<?php echo $sm_url; ?>">Settings &gt; Media page</a>
+							<br /><br />
+							In version 3.0 this screen will be removed and the slider will <strong>*only*</strong> be on the <a href="<?php echo $sm_url; ?>">Settings &gt; Media page</a></p>
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<th>
-						<strong><?php _e( 'JPEG Quality %', 'wp-resized-image-quality' ); ?></strong>
+						<strong><?php _e( 'JPEG Quality', 'wp-resized-image-quality' ); ?></strong>
 					</th>
 					<td>
 						<div>
-							<input type="text" class="riq-amount" id="riq-amount" style="border: 0; font-weight: bold;" />
-							<br />
-							<?php _e( 'The default compression setting in WordPress is 90%', 'wp-resized-image-quality' ); ?>
+							Compression %: <input type="text" class="riq-amount" id="riq-amount" style="font-weight: bold; background-color: transparent; border: none; box-shadow: none;" />
 						</div>
 					</td>
 				</tr>
@@ -42,6 +42,9 @@ var jpegQuality = '<?php echo $this->jpeg_quality; ?>';
 					<td colspan="2">
 						<div class="riq-slider" id="riq-slider" style="width:400px;"></div>
 						<input type="hidden" name="riq-integer" id="riq-integer" value="<?php echo $this->jpeg_quality; ?>" />
+						<br />
+						
+						<?php _e( 'The default compression setting in WordPress is 90%', 'wp-resized-image-quality' ); ?>
 					</td>
 				</tr>
 			</table>
