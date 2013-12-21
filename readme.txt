@@ -38,7 +38,7 @@ The only interface is a slider aqdded to the Settings > Media admin page, making
 The default image compression setting for JPEGs is 90%.
 
 
-= What about PNG and GIF images? =
+= What about PNG and GIF images? Are they compressed? =
 
 WordPress doesn't currently support PNG compression internally (none at all). There are other image-handling plugins that compress PNGs and GIFs, but they either require server-side tools or a 3rd-party service. For a Plugin using server-side tools, try 'EWWW Image Optimizer'. For a Plugin using a 3rd-party service, try 'WP Smush.it'.
 
@@ -51,11 +51,6 @@ First, install this plugin and choose your new compression level. Then install t
 = What happens to uploaded images if I turn the plugin off? =
 
 Images uploaded while the plugin was active will stay at their original/old compression level (to recompress them, I recommend the Regenerate Thumbnails plugin). After you deactivate the custom compression setting will be removed and all new images will use WP's default 90% compression setting.
-
-
-= Does this plugin compress PNG files? =
-
-No, it doesn't. All the PNG compression tools I've found aren't standard on most servers. You would need root access and a more-complicated plugin to get PNG compression working.
 
 
 
