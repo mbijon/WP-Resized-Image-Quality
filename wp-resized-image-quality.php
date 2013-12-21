@@ -28,7 +28,7 @@ License: GPLv2
 
 ************************************************************************/
 
-if ( ! class_exists('WP_Resized_Image_Quality') ) :
+if ( ! class_exists( 'WP_Resized_Image_Quality' ) ) :
 
 class WP_Resized_Image_Quality {
 	/**
@@ -82,6 +82,7 @@ class WP_Resized_Image_Quality {
 			
 		// The whole reason we're here
 		add_filter( 'jpeg_quality', array( $this, 'get_jpeg_quality_setting' ) );
+		add_filter( 'wp_editor_set_quality', array( $this, 'get_jpeg_quality_setting' ) ); // Filter added in WP 3.5, added in RIQ 2.0.1
 		
 		load_plugin_textdomain( 'wp-resized-image-quality', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 		if ( '' != WPLANG )
