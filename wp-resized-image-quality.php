@@ -51,6 +51,11 @@ class WP_Resized_Image_Quality {
 	 */
 	const RIQ_PLUGIN_VERSION = '2.0';
 	
+	/**
+	 * Transient expiration time: 24-hours
+	 */
+	const RIQ_TRANSIENT_TIME = '86400';
+	
 	
 	/**
 	 * Constructor: Actions setup
@@ -161,7 +166,7 @@ class WP_Resized_Image_Quality {
 			else
 				$jpeg_quality = (int)90;
 			
-			set_transient( 'riq_jpeg_quality', $jpeg_quality, 60 * 60 * 24 );
+			set_transient( 'riq_jpeg_quality', $jpeg_quality, self::RIQ_TRANSIENT_TIME );
 			
 		}
 		
@@ -194,7 +199,7 @@ class WP_Resized_Image_Quality {
 			else
 				$jpeg_quality = (int)90;
 			
-			set_transient( 'riq_jpeg_quality', $jpeg_quality, 60 * 60 * 24 );
+			set_transient( 'riq_jpeg_quality', $jpeg_quality, self::RIQ_TRANSIENT_TIME );
 			
 		}
 		
@@ -246,7 +251,7 @@ class WP_Resized_Image_Quality {
 			else
 				$jpeg_quality = (int)90;
 			
-			set_transient( 'riq_jpeg_quality', $jpeg_quality, 60 * 60 * 24 );
+			set_transient( 'riq_jpeg_quality', $jpeg_quality, self::RIQ_TRANSIENT_TIME );
 		}
 		
 		return $jpeg_quality;
@@ -260,7 +265,7 @@ class WP_Resized_Image_Quality {
 		update_option( 'riq_options', $this->riq_options );
 		
 		$this->jpeg_quality = intval( $jpeg_quality );
-		set_transient( 'riq_jpeg_quality', intval( $jpeg_quality ), 60 * 60 * 24 );
+		set_transient( 'riq_jpeg_quality', intval( $jpeg_quality ), self::RIQ_TRANSIENT_TIME );
 		
 		return true;
 	}
