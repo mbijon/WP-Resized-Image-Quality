@@ -1,30 +1,35 @@
 === WP Resized Image Quality ===
 Contributors: mbijon
 Tags: image, thumbnail, compression, quality, YSlow, PageSpeed, bandwidth, jpeg, jpg, size, file, storage, uploader, uploaded, imagemagick, gd library
-Requires at least: 2.7
-Tested up to: 3.6-beta4
-Stable tag: 2.0
+Requires at least: 3.1
+Tested up to: 3.8.0
+Stable tag: 2.1
 
 Get better uploaded quality or save bandwidth: Change the JPEG compression-level of uploaded images and thumbnails.
+
 
 == Description ==
 
 Get better uploaded quality or save bandwidth: Change the JPEG compression-level of uploaded images and thumbnails.
 
-The WP Resized Image Quality plugin lets you change the compression-level of uploaded JPEG images and thumbnails. Set it for maximum quality when you want images to look their best, or take advantage of lower quality settings to save bandwidth.
+'Resized Image Quality' lets you *easily* change the compression-level of uploaded JPEG images and thumbnails. Set it for maximum quality when you want images to look their best, or take advantage of lower quality settings to save bandwidth.
 
-The admin page uses an easy slider to set the compression level, making this easier to use than other compression plugins or functions.php settings.
+The only interface is a slider aqdded to the Settings > Media admin page, making this easier to use than other compression plugins or functions.php settings.
+
 
 == Installation ==
 
-1. Install 'WP Resized Image Quality' through the WordPress.org plugin directory, or by uploading the files to your server
-2. After activating the Plugin, change your image quality settings on the Settings page in WP-Admin: Settings > Image Quality
+1. Install 'WP Resized Image Quality' through the WordPress.org plugin directory, by uploading to your server, or git/grunt/Composer method if you're that kind of dev
+2. After activating the Plugin, change your image quality settings on the Settings page in WP-Admin: Settings > Media
 3. That's it.  You're ready to go!
+
 
 = Requirements =
 
 * PHP 5.2 or above
 * WordPress 3.1 or above
+* WP-compatible, server-side image library: gdlib or ImageMagick (ImageMagick is preferred)
+
 
 == Frequently Asked Questions ==
 
@@ -42,14 +47,19 @@ After you deactivate the custom compression setting will be removed and all new 
 
 = Does this plugin compress PNG files? =
 
-Unfortunately, it doesn't. All the PNG compression tools I've found aren't standard on most servers. You would need root access and a more-complicated plugin to get PNG compression working.
+No, it doesn't. All the PNG compression tools I've found aren't standard on most servers. You would need root access and a more-complicated plugin to get PNG compression working.
+
 
 == Screenshots ==
 
 1. No complicated media/compression interface. Just one slider added to the Settings > Admin page
-2. Admin page with one setting, simple enough
+
 
 == Changelog ==
+
+= 2.0.1 =
+* Update styles to use colors from WP3.8 admin themes
+* Docs & screenshot reflect new placement of slider on the Settings > Media admin page
 
 = 2.0 =
 * Move image compression toggle from custom Settings > Image Quality page to Settings > Media

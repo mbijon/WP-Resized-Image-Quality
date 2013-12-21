@@ -1,11 +1,11 @@
 <?php
 /************************************************************************
 Plugin Name: WP Resized Image Quality
-Plugin URI: http://www.geekcoded.com/plugin/wp-resized-image-quality/
+Plugin URI: http://www.etchsoftware.com/#how-do-i-get-in-touch
 Description: Change the compression-level of uploaded images and thumbnails. Get better image quality or save bandwidth.
-Version: 2.0
-Author: Mike Bijon, GeekCoded
-Author URI: http://www.mbijon.com/about-mike-bijon/
+Version: 2.1
+Author: Mike Bijon, Etch Software
+Author URI: http://www.mbijon.com/about
 License: GPLv2
 
 ************************************************************************
