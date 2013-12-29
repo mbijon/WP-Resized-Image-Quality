@@ -3,7 +3,7 @@ Contributors: mbijon
 Tags: image, thumbnail, compression, quality, YSlow, PageSpeed, bandwidth, jpeg, jpg, size, file, storage, uploader, uploaded, imagemagick, gd library
 Requires at least: 3.1
 Tested up to: 3.8.0
-Stable tag: 2.1
+Stable tag: 2.1.1
 
 Get better uploaded quality or save bandwidth: Change the JPEG compression-level of uploaded images and thumbnails.
 
@@ -60,6 +60,9 @@ Images uploaded while the plugin was active will stay at their original/old comp
 
 
 == Changelog ==
+
+= 2.1.1 =
+* Prevent blank image & PHP-type error when compression-level set to 0%
 
 = 2.1 =
 * Add handling of the 'wp_editor_set_quality' filter that was added in WP 3.5 for ImageMagick API

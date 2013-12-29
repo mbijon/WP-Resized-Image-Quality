@@ -3,9 +3,9 @@
 Plugin Name: WP Resized Image Quality
 Plugin URI: http://www.etchsoftware.com/#how-do-i-get-in-touch
 Description: Change the compression-level of uploaded images and thumbnails. Get better image quality or save bandwidth.
-Version: 2.1
+Version: 2.1.1
 Author: Mike Bijon, Etch Software
-Author URI: http://www.mbijon.com/about
+Author URI: http://www.mbijon.com
 License: GPLv2
 
 ************************************************************************
@@ -49,7 +49,7 @@ class WP_Resized_Image_Quality {
 	/**
 	 * Version # of WP-Resized-Image-Quality
 	 */
-	const RIQ_PLUGIN_VERSION = '2.0';
+	const RIQ_PLUGIN_VERSION = '2.1.1';
 	
 	/**
 	 * Transient expiration time: 24-hours
@@ -127,6 +127,7 @@ class WP_Resized_Image_Quality {
 	public function admin_page_statics( $hook ) {
 		
 		if ( $hook == 'options-media.php' || $hook == 'settings_page_riq-admin' ) {
+			
 			// JS
 			wp_enqueue_script( 'jquery-ui-slider' );
 			wp_enqueue_script( 'riq-admin' );
@@ -147,19 +148,30 @@ class WP_Resized_Image_Quality {
 			wp_die( __( 'You do not have sufficient permissions to access this page. Please check your login and try again.', 'wp-resized-image-quality' ) );
 		
 		// Security: Check WP nonce to prevent external use
-		if ( ! empty( $_POST['riq-integer'] ) && check_admin_referer( 'riq_update_admin_options', 'riq_admin_nonce' ) ) {
-			if ( ! empty( $_POST['riq-defaults'] ) && 'Reset to Default' == $_POST['riq-defaults'] )
-				$confirm_update = $this->update_plugin_settings( (int)90 );
-			else
-				$confirm_update = $this->update_plugin_settings( $_POST['riq-integer'] );
+		if ( isset( $_POST['riq-integer'] ) && check_admin_referer( 'riq_update_admin_options', 'riq_admin_nonce' ) ) {
 			
-		} elseif ( ! empty( $_POST['riq-integer'] ) ) {
+			if ( ! empty( $_POST['riq-defaults'] ) && 'Reset to Default' == $_POST['riq-defaults'] ) {
+				
+				$confirm_update = $this->update_plugin_settings( (int)90 );
+				
+			} else {
+				
+				if ( (string)$jpeg_quality == '0' ) // WordPress core does this to avoid empty images
+					$jpeg_quality = 1;
+				
+				$confirm_update = $this->update_plugin_settings( $_POST['riq-integer'] );
+				
+			}
+			
+		} elseif ( isset( $_POST['riq-integer'] ) ) {
+			
 			wp_die( __( 'Invalid: Update without permissions. Please check your login and try again.', 'wp-resized-image-quality' ) );
 			
 		}
 		
 		// Get the whole reason this plugin exists
 		if ( false === ( $jpeg_quality = get_transient( 'riq_jpeg_quality' ) ) ) {
+			
 			$this->riq_options = get_option( 'riq_options' );
 			
 			if ( array_key_exists( 'jpeg_quality', $this->riq_options ) )
@@ -175,6 +187,7 @@ class WP_Resized_Image_Quality {
 		
 		// Include admin page/HTML output from separate file
 		require_once( dirname( __file__ ) . '/templates/riq-admin-page-template.php' );
+		
 	}
 	
 	
@@ -193,6 +206,7 @@ class WP_Resized_Image_Quality {
 		
 		// Get the whole reason this plugin exists
 		if ( false === ( $jpeg_quality = get_transient( 'riq_jpeg_quality' ) ) ) {
+			
 			$this->riq_options = get_option( 'riq_options' );
 			
 			if ( array_key_exists( 'jpeg_quality', $this->riq_options ) )
@@ -215,7 +229,7 @@ class WP_Resized_Image_Quality {
 	// Sanitization helper function for 'render_riq_media_option()'
 	public function sanitize_riq_media_option( $riq_options ) {
 		
-		if ( ! empty( $_POST['riq-integer'] ) ) {
+		if ( isset( $_POST['riq-integer'] ) ) {
 			
 			$valid = array();
 			$valid['jpeg_quality'] = intval( $_POST['riq-integer'] );
@@ -230,9 +244,8 @@ class WP_Resized_Image_Quality {
 			add_settings_error(
 				'JPEG Quality',
 				'riq_numeric_error',
-				//'Invalid %, must be a number',
-				print_r($riq_options),
-				//$riq_options,
+				'Invalid JPEG compression %: The setting must be a number',
+				//print_r($riq_options),
 				'error'
 			);
 		
@@ -261,6 +274,9 @@ class WP_Resized_Image_Quality {
 	
 	// Save plugin option array & update transient
 	public function update_plugin_settings( $jpeg_quality = 90 ) {
+		
+		if ( ! is_numeric( $jpeg_quality ) )
+			return false;
 		
 		$this->riq_options['jpeg_quality'] = intval( $jpeg_quality );
 		update_option( 'riq_options', $this->riq_options );
