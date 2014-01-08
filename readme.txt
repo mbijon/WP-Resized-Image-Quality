@@ -16,6 +16,14 @@ Get better uploaded quality or save bandwidth: Change the JPEG compression-level
 
 The only interface is a slider aqdded to the Settings > Media admin page, making this easier to use than other compression plugins or functions.php settings.
 
+=Support=
+
+This plugin is provided according to the terms of the GPL license. Support will be provided as fixes for confirmed bugs on a reasonable timeline. User Support will be provided on an as-available basis but is not guaranteed. In the event support for your specific site is urgently needed, please contact me for timing and rates at [Etch Software](http://www.etchsoftware.com/)
+
+=Developers=
+
+Please fork, contribute and file technical bugs on our [GitHub repo](https://github.com/mbijon/WP-Resized-Image-Quality).
+
 
 == Installation ==
 
